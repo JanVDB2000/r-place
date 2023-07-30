@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>r/place</title>
     @livewireStyles
 </head>
@@ -45,8 +46,8 @@
 
     .color-panel {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 50%;
+        left: 38%;
         background-color: #ffffff;
         border: 1px solid #cccccc;
         padding: 10px;
@@ -68,5 +69,6 @@
 </style>
     <livewire:update-cell-color :canvas="$canvas" />
 @livewireScripts
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
