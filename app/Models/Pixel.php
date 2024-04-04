@@ -10,11 +10,16 @@ class Pixel extends Model
     use HasFactory;
 
     protected $fillable = [
-        'x', 'y', 'color', // Add any additional fillable fields here
+        'x', 'y', 'color',
     ];
 
     public function canvas()
     {
         return $this->belongsTo(Canvas::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

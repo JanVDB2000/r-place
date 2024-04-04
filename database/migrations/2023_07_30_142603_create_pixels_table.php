@@ -12,9 +12,11 @@ class CreatePixelsTable extends Migration
             $table->id();
             $table->unsignedInteger('x');
             $table->unsignedInteger('y');
-            $table->string('color')->default('c'); // 'c' represents the default color (e.g., #ccc)
+            $table->string('color')->default('c');
             $table->unsignedBigInteger('canvas_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('canvas_id')->references('id')->on('pixels')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

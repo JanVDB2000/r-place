@@ -1,14 +1,13 @@
 <div>
-    <div class="canvas">
-        @foreach ($canvas->pixels as $cell)
+<div class="canvas">
+        @foreach ($jsonData as $cell)
             <div class="cell"
                  style="grid-column: {{ $cell->x + 1 }}; grid-row: {{ $cell->y + 1 }}; background-color: {{ $cell->color }};"
                  wire:click="showColorPanel({{ $cell->id }})">
             </div>
         @endforeach
     </div>
-
-    @if ($showPanel)
+@if ($showPanel)
         <div class="color-panel card row">
             <h3 class="text-center">Select a color</h3>
             <div class="color-options d-flex">

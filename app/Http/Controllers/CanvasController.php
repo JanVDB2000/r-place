@@ -8,25 +8,36 @@ use Illuminate\Http\Request;
 
 class CanvasController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->canvas = Canvas::first();
+    }
+
+
     public function index()
     {
-        $canvas = Canvas::query()->first();
+        $canvas = $this->canvas;
         return view('canvas.index', compact('canvas'));
     }
 
-    public function update(Request $request)
+    public function fetchCanvas(): \Illuminate\Http\JsonResponse
     {
-        $request->validate([
-            'x' => 'required|integer|min:0|max:19', // Adjust the max value to match the number of columns - 1
-            'y' => 'required|integer|min:0|max:19', // Adjust the max value to match the number of rows - 1
-            'color' => 'required|string|max:1',
-        ]);
+        $allPixels = Pixel::all();
+        return response()->json($allPixels);
+    }
 
-        $cell = Pixel::updateOrCreate(
-            ['x' => $request->x, 'y' => $request->y],
-            ['color' => $request->color]
-        );
-
-        return response()->json(['message' => 'Cell updated successfully']);
+    public function update(Request $request): \Illuminate\Http\JsonResponse
+    {
+        if ( $request->get('cellId') && $request->get('selectedColor')){
+            // Find the cell by its ID and update its color
+            $cell = $this->canvas->pixels->firstWhere('id', $request->get('cellId'));
+            if ($cell) {
+                $cell->update(['color' => $request->get('selectedColor')]);
+            }
+            // Return updated data
+            return response()->json($this->canvas->pixels);
+        }
+        return response()->json($this->canvas->pixels);
     }
 }

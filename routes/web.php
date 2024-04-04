@@ -17,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/canvas/fetch', [CanvasController::class, 'fetchCanvas']);
 Route::get('/canvas', [CanvasController::class, 'index'])->name('canvas.index');
-Route::post('/canvas/update', [CanvasController::class, 'update'])->name('canvas.update');
+Route::post('/canvas/update/', [CanvasController::class, 'update'])->name('canvas.update');

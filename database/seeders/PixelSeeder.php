@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Canvas;
 use App\Models\Pixel;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,8 @@ class PixelSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $users = User::pluck('id')->toArray();
         $canvas = DB::table('canvases')->first();
         for ($x = 0; $x < $canvas->width; $x++) {
             for ($y = 0; $y < $canvas->height; $y++) {
@@ -54,6 +57,7 @@ class PixelSeeder extends Seeder
                         'silver']),
 
                     'canvas_id' => $canvas->id,
+                    'user_id' =>  $this->faker->randomElement($users),
                 ]);
             }
         }

@@ -1,16 +1,14 @@
 <?php
 
-//// app/Http/Livewire/UpdateCellColor.php
-
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Canvas;
+use Livewire\Component;
 
 class UpdateCellColor extends Component
 {
     public $canvas;
-    public $selectedColor = '#ff0000'; // Default color is red
+    public $selectedColor = 'white';
     public $showPanel = false;
     public $selectedCellId;
 
@@ -19,19 +17,25 @@ class UpdateCellColor extends Component
         $this->canvas = $canvas;
     }
 
+    public function render()
+    {
+        return view('livewire.update-cell-color', [
+            'canvas' => $this->canvas,
+        ]);
+    }
+
     public function showColorPanel($cellId)
     {
         $this->selectedCellId = $cellId;
         $this->showPanel = true;
     }
 
-    public function selectColor($color)
+    public function selectColor($color,$selectedCellId)
     {
         $this->selectedColor = $color;
         $this->showPanel = false;
-
         // Update the cell color after selecting the color
-        $this->updateCellColor($this->selectedCellId);
+        $this->updateCellColor($selectedCellId);
     }
 
     public function updateCellColor($cellId)
@@ -43,9 +47,9 @@ class UpdateCellColor extends Component
         }
     }
 
-    public function render()
-    {
-        return view('livewire.update-cell-color');
-    }
+    protected $listeners = [
+        'openColorPanel' => 'showColorPanel',
+        'selectColor' => 'selectColor',
+    ];
 }
 
