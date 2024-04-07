@@ -9,9 +9,9 @@
     @livewireStyles
 </head>
 <body class="p-0 m-0 flex justify-evenly bg-orange-500">
-<img src="{{asset('img/img.png')}}" alt="r-place-logo" class="h-16 w-16 my-auto">
+<img src="{{asset('img/img.png')}}" alt="r-place-logo" class="h-36 w-36 my-auto">
 <x-canvas.canvas></x-canvas.canvas>
-<img src="{{asset('img/img.png')}}" alt="r-place-logo" class="h-16 w-16 my-auto">
+<img src="{{asset('img/img.png')}}" alt="r-place-logo" class="h-36 w-36 my-auto">
 @livewireScripts
 </body>
 </html>

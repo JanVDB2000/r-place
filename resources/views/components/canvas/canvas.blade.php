@@ -3,20 +3,27 @@
         <template x-for="cell in cells" :key="cell.id">
             <div class="w-full h-full border-black cursor-pointer"
                  x-bind:style="'grid-column: ' + (cell.x + 1) + '; grid-row: ' + (cell.y + 1) + '; background-color: ' + cell.color"
-                 @click="openColorPanel(cell.id)">
+                 @click="openColorPanel(cell.id,cell.user.name)">
             </div>
         </template>
     </div>
     <!-- Color panel -->
-    <div x-show="showPanel" class="absolute bottom-1/4 left-1/4 border-2 border-black bg-white p-4 shadow-md rounded-xl flex flex-wrap gap-1">
-        <template x-for="color in availableColors" class="shadow-md rounded-xl">
-            <button class="w-10 h-10 rounded-full mr-2 focus:outline-none border-2 border-black"
-                    x-bind:style="'background-color: ' + color"
-                    x-on:click="selectColor(color)"></button>
-        </template>
-        <button class="bg-gray-200 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-300 focus:outline-none"
-                @click="hideColorPanel()">Close</button>
+    <div x-show="showPanel" class="absolute bottom-1/4 left-1/4 border-2 border-black bg-white p-4 shadow-md rounded-xl ">
+        <h3 class="text-center pb-3" x-text="user"></h3>
+        <div class="flex flex-wrap gap-1">
+            <template x-for="color in availableColors" class="shadow-md rounded-xl">
+                <button class="w-10 h-10 rounded-full mr-2 focus:outline-none border-2 border-black"
+                        x-bind:style="'background-color: ' + color"
+                        x-on:click="selectColor(color)"></button>
+
+            </template>
+
+            <button class="bg-gray-200 px-4 py-2 rounded-md text-gray-700 hover:bg-gray-300 focus:outline-none"
+                    @click="hideColorPanel()">Close</button>
+        </div>
+
     </div>
+
 </div>
 <script>
     function canvasComponent() {
@@ -25,6 +32,7 @@
             showPanel: false,
             selectedColor: '#000000', // Default color is black
             selectedCellId: null,
+            user: null,
             availableColors: [
                 'black',
                 'grey',
@@ -56,8 +64,10 @@
                         console.error('An error occurred:', error);
                     });
             },
-            openColorPanel(cellId) {
+            openColorPanel(cellId,name) {
                 this.selectedCellId = cellId;
+                this.user = name
+                console.log(this.user)
                 this.showPanel = true;
             },
             selectColor(color) {

@@ -23,7 +23,7 @@ class CanvasController extends Controller
 
     public function fetchCanvas(): \Illuminate\Http\JsonResponse
     {
-        $allPixels = Pixel::all();
+        $allPixels = Pixel::with('user')->get();
         return response()->json($allPixels);
     }
 
