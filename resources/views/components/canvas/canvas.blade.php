@@ -1,17 +1,16 @@
 <div x-data="canvasComponent()" x-init="fetchDataAndRender()">
-    <div class="canvas">
+    <div class="min-h-[100vh] min-w-[100vh] grid bg-white border-4 border-black relative">
         <template x-for="cell in cells" :key="cell.id">
-            <div class="cell"
+            <div class="w-full h-full border-black cursor-pointer"
                  x-bind:style="'grid-column: ' + (cell.x + 1) + '; grid-row: ' + (cell.y + 1) + '; background-color: ' + cell.color"
                  @click="openColorPanel(cell.id)">
             </div>
         </template>
     </div>
-
     <!-- Color panel -->
-    <div x-show="showPanel" class="color-panel bg-white p-4 shadow-md rounded-xl">
+    <div x-show="showPanel" class="absolute bottom-1/4 left-1/4 border-2 border-black bg-white p-4 shadow-md rounded-xl flex flex-wrap gap-1">
         <template x-for="color in availableColors" class="shadow-md rounded-xl">
-            <button class="w-10 h-10 rounded-full mr-2 focus:outline-none"
+            <button class="w-10 h-10 rounded-full mr-2 focus:outline-none border-2 border-black"
                     x-bind:style="'background-color: ' + color"
                     x-on:click="selectColor(color)"></button>
         </template>
@@ -42,8 +41,8 @@
                 'gold',
                 'silver'
             ],
-            fetchDataAndRender() {
-                fetch('/canvas/fetch')
+            async fetchDataAndRender() {
+                fetch('api/canvas/fetch')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -63,14 +62,14 @@
             },
             selectColor(color) {
                 this.selectedColor = color;
-                console.log(color)
-                console.log( this.selectedCellId)
+                //console.log(color)
+                //console.log( this.selectedCellId)
                 // Update the cell color after selecting the color
                 this.updateCellColor(color, this.selectedCellId)
                 this.showPanel = false;
             },
             updateCellColor(selectedColor, cellId) {
-                fetch('/canvas/update', {
+                fetch('api/canvas/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
